@@ -1,7 +1,4 @@
 import jwtDecode from 'jwt-decode';
-import { verify, sign } from 'jsonwebtoken';
-//
-import axios from './axios';
 
 export const isValidToken = (accessToken: string) => {
     if (!accessToken) return false;

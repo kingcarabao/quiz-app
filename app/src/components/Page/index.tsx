@@ -8,12 +8,11 @@ interface Props {
 }
 
 export default function Page({ children }: Props) {
-    const spawns =  useChildrenSpawner(children);
+  const spawns = useChildrenSpawner(children);
 
-    return (
-        <>
-            <div>Page</div>
-            {spawns}
-        </>
-    );
+  return (
+    <>
+      {spawns}
+    </>
+  );
 }

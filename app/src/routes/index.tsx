@@ -1,55 +1,65 @@
-import { Suspense, lazy } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, useRoutes } from 'react-router-dom';
 import LoadingScreen from '../components/LoadingScreen';
 
 /**
  * lazy functions needs to be wrapped inside Suspense comp
- * @param Component 
+ * @param accepts react components
  * @returns Component either a Loading Screen or the Component to be rendered
  */
-const LoadComponent = (Component: any) => (props: any) => {
+const LoadComponent = (Component: React.ElementType) => {
+  return (props: any) => {
     return (
-        <Suspense fallback={LoadingScreen}>
-            <Component {...props}/>
-        </Suspense>
-    )
+      <Suspense fallback={<LoadingScreen/>}>
+        <Component {...props} />
+      </Suspense>
+    );
+  }
 }
 
 /**
- * 
+ *
  * @returns Routes Component
  */
 const Routes = () => {
-    return useRoutes([
-        {
-            path: '/app',
-            element: <ClientLayout />,
-            children: [
-                { path: 'quiz', element: <QuizPage /> }
-            ]
-        }
-   ]);
-}
+  return useRoutes([
+    {
+      path: '/',
+      element: <GuestLayout />,
+      children: [
+        { path: 'login', element: <LoginPage /> },
+      ],
+    },
+    {
+      path: '/app',
+      element: <ClientLayout />,
+      children: [
+        { path: 'quiz', element: <QuizPage /> },
+      ],
+    },
+  ]);
+};
 
 /**
- * 
+ *
  * Routes Component need tp be wrapped around a Router Context
  */
-export default function Router () {
-    return (
-        <BrowserRouter>
-            <Routes />
-        </BrowserRouter>
-    );
+export default function Router() {
+  return (
+    <BrowserRouter>
+      <Routes />
+    </BrowserRouter>
+  );
 }
-
 
 /**
  * List of all the components that are dynamically loaded
  */
 
 // Layouts
-const ClientLayout = LoadComponent(lazy(() => import('../layouts/ClientLayout')));
+const GuestLayout = LoadComponent(lazy(() => { return import('../layouts/GuestLayout'); }));
+const ClientLayout = LoadComponent(lazy(() => { return import('../layouts/ClientLayout'); }));
 
-//Pages
-const QuizPage = LoadComponent(lazy(() => import('../pages/site/QuizPage')));
+// Pages
+const QuizPage = LoadComponent(lazy(() => { return import('../pages/site/QuizPage'); }));
+const LoginPage = LoadComponent(lazy(() => { return import('../pages/site/LoginPage'); }));

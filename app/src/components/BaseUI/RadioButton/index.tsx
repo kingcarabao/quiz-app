@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function RadioButton() {
-    return (
-        <div>radio button</div>
-    )
+  return (
+    <input type="radio" />
+  );
 }

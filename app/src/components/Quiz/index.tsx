@@ -5,26 +5,26 @@ interface Props {
     quiz?: any;
 }
 
-const QuizComponent = (props: Props) => {
-    useEffect(() => {
-        
-    });
-    return (
-        <>
-            <p>QuizCompo</p>
-            <p>{JSON.stringify(props.quiz)}</p>
-        </>
-    );
+function QuizComponent(props: Props) {
+  useEffect(() => {
+
+  });
+  return (
+    <>
+      <p>QuizCompo</p>
+      <p>{JSON.stringify(props.quiz)}</p>
+    </>
+  );
 }
 
-export default function Quiz () {
-    const resourceUrl = '/quiz-schedule?quizSetItemId=18';
-    const resourceParams = '';
-    const resourceName = 'quiz';
+export default function Quiz() {
+  const resourceUrl = '/quiz-schedule?quizSetItemId=18';
+  const resourceParams = '';
+  const resourceName = 'quiz';
 
-    return (
-        <DataFetcher resourceUrl={resourceUrl} resourceName={resourceName} resourceParams={resourceParams}>
-            <QuizComponent />
-        </DataFetcher>
-    )
+  return (
+    <DataFetcher resourceUrl={resourceUrl} resourceName={resourceName} resourceParams={resourceParams}>
+      <QuizComponent />
+    </DataFetcher>
+  );
 }

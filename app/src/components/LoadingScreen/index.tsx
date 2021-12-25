@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import React from 'react'
 
-export default function LoadingScreen() {
-    return (
-        <>
-            Loading Screen
-        </>
-    )
+export default function index() {
+  return (
+    <div>
+      Loading Screen
+    </div>
+  )
 }

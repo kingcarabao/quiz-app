@@ -9,20 +9,22 @@ interface Props{
     children: React.ReactNode;
 }
 
-export default function ResourceLoader({ resourceUrl, resourceName, resourceParams, children }: Props){
-    const [data, setData] = useState(null);
-    const spawns = useSpawnChildren(children, { [resourceName]: data });
+export default function ResourceLoader({
+  resourceUrl, resourceName, resourceParams, children,
+}: Props) {
+  const [data, setData] = useState(null);
+  const spawns = useSpawnChildren(children, { [resourceName]: data });
 
-    const getResource = useCallback(() => {
-        (async () => {
-            const response = await axios.get(resourceUrl, {params: resourceParams});
-            setData(response.data)
-        }) ();
-    }, [resourceUrl, resourceParams]);
+  const getResource = useCallback(() => {
+    (async () => {
+      const response = await axios.get(resourceUrl, { params: resourceParams });
+      setData(response.data);
+    })();
+  }, [resourceUrl, resourceParams]);
 
-    useEffect(() => {
-        getResource();
-    }, [resourceUrl, getResource]);
+  useEffect(() => {
+    getResource();
+  }, [resourceUrl, getResource]);
 
-    return <>{spawns}</>;
+  return <>{spawns}</>;
 }

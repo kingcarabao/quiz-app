@@ -1,8 +1,6 @@
 import axios from 'axios';
-import dotenv from 'dotenv';
-dotenv.config()
 
-const axiosInstance = axios.create({ baseURL: process.env.REACT_APP_API_URL });
+const axiosInstance = axios.create({ baseURL: process.env.REACT_APP_API_LOCAL_URL });
 
 axiosInstance.interceptors.response.use(
   (response) => response,
