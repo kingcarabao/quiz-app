@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from '../../utils/axios';
+import { localHttp } from '../../utils/axios';
 import useSpawnChildren from '../../hooks/useChildrenSpawner';
 
 interface Props{
@@ -9,7 +9,7 @@ interface Props{
     children: React.ReactNode;
 }
 
-export default function ResourceLoader({
+export default function DataFetcher({
   resourceUrl, resourceName, resourceParams, children,
 }: Props) {
   const [data, setData] = useState(null);
@@ -17,7 +17,7 @@ export default function ResourceLoader({
 
   const getResource = useCallback(() => {
     (async () => {
-      const response = await axios.get(resourceUrl, { params: resourceParams });
+      const response = await localHttp.get(resourceUrl, { params: resourceParams });
       setData(response.data);
     })();
   }, [resourceUrl, resourceParams]);

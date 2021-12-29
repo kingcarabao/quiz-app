@@ -1,5 +1,4 @@
-import React, { useReducer } from 'react';
-import { JWTContextType, AuthState, AuthUser, AuthPayload } from '../../@types/authenticate';
+import { AuthState } from '../../@types/authenticate';
 
 const JWTInitialState: AuthState = {
     user: {
@@ -18,6 +17,14 @@ const JWTInitialState: AuthState = {
 
 const JWTReducer = (state: AuthState, action: any ) => { 
     switch (action.type) {
+        case 'INITIALIZE': {
+            return {
+                ...state,
+                isAuthenticated: action.payload.isAuthenticated,
+                user: action.payload.user,
+                token: action.payload.token
+            }
+        }
         case 'LOGIN': {
             return {
                 ...state,

@@ -1,6 +1,9 @@
 import React, { Suspense, lazy } from 'react';
+import { Navigate } from 'react-router';
 import { BrowserRouter, useRoutes } from 'react-router-dom';
 import LoadingScreen from '../components/LoadingScreen';
+import AuthGuard from '../guards/AuthGuard';
+import GuestGuard from '../guards/GuestGuard';
 
 /**
  * lazy functions needs to be wrapped inside Suspense comp
@@ -25,15 +28,17 @@ const Routes = () => {
   return useRoutes([
     {
       path: '/',
-      element: <GuestLayout />,
+      element: <GuestGuard><GuestLayout /></GuestGuard>,
       children: [
+        { path: '', element: <Navigate to="/login" /> },
         { path: 'login', element: <LoginPage /> },
       ],
     },
     {
       path: '/app',
-      element: <ClientLayout />,
+      element: <AuthGuard><ClientLayout /></AuthGuard>,
       children: [
+        { path: 'quiz-list', element: <QuizListPage /> },
         { path: 'quiz', element: <QuizPage /> },
       ],
     },
@@ -62,4 +67,5 @@ const ClientLayout = LoadComponent(lazy(() => { return import('../layouts/Client
 
 // Pages
 const QuizPage = LoadComponent(lazy(() => { return import('../pages/site/QuizPage'); }));
+const QuizListPage = LoadComponent(lazy(() => { return import('../pages/site/QuizListPage'); }));
 const LoginPage = LoadComponent(lazy(() => { return import('../pages/site/LoginPage'); }));

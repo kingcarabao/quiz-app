@@ -10,7 +10,7 @@ ReactDOM.render(
   <StrictMode>
     <HelmetProvider>
       <AuthProvider>
-        <App />
+        <App/>
       </AuthProvider>
     </HelmetProvider>
   </StrictMode>,

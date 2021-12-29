@@ -4,7 +4,7 @@ import React from 'react';
 import useChildrenSpawner from '../../hooks/useChildrenSpawner';
 
 interface Props {
-    children: React.ReactNode
+  children: React.ReactNode
 }
 
 export default function Page({ children }: Props) {

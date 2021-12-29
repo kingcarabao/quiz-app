@@ -4,6 +4,7 @@
   "description": "quiz app simple express api",
   "main": "index.js",
   "scripts": {
+    "start-dev": "nodemon index",
     "test": "npm test"
   },
   "author": "",

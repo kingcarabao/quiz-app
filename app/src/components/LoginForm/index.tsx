@@ -10,13 +10,12 @@ interface FormValues {
 }
 
 const initialValues = {
-  email: 'foo@example.com',
-  password: 'foobar',
+  email: 'king@email.com',
+  password: 'kingpass',
 };
 
 export default function LoginForm() {
   const [auth, error] = useAuth();
-  if (error) alert(error); 
 
   /**
    * Everything to do when submitting
@@ -40,7 +39,7 @@ export default function LoginForm() {
     onSubmit: onSubmitHandler,
   });
 
-  const { touched, handleSubmit, errors, getFieldProps } = formik;
+  const { touched, handleSubmit, errors, getFieldProps, isSubmitting } = formik;
 
   /**
    * Form component
@@ -79,7 +78,7 @@ export default function LoginForm() {
             container
             justifyContent="flex-end"
           >
-            <Button variant="contained" type="submit">
+            <Button variant="contained" type="submit" disabled={isSubmitting}>
               Sign In
             </Button>
           </Grid>

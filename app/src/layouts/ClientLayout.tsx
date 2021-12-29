@@ -9,7 +9,7 @@ interface Props {
 export default function Layout({ children }: Props) {
   return (
     <>
-      <div>Layout</div>
+      <Navbar />
       <Outlet />
     </>
   );

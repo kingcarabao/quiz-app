@@ -1,10 +1,18 @@
 import axios from 'axios';
 
-const axiosInstance = axios.create({ baseURL: process.env.REACT_APP_API_LOCAL_URL });
+const localHttp = axios.create({ baseURL: process.env.REACT_APP_API_LOCAL_URL });
 
-axiosInstance.interceptors.response.use(
+localHttp.interceptors.response.use(
   (response) => response,
   (error) => Promise.reject((error.response && error.response.data) || 'Something went wrong')
 );
 
-export default axiosInstance;
+const quizHttp = axios.create({ baseURL: process.env.REACT_APP_API_QUIZ_URL });
+
+localHttp.interceptors.response.use(
+  (response) => response,
+  (error) => Promise.reject((error.response && error.response.data) || 'Something went wrong')
+);
+
+export { localHttp, quizHttp };
+export default localHttp;

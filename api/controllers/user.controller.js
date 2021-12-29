@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const db = require('../models');
 const { generateToken } = require('../utils/jwt');
+const { extract } = require('../utils/user');
 const { sendErrorResponse } = require('../utils/output');
 
 const { Sequelize: { Op }, user: User} = db;
@@ -67,7 +68,7 @@ _controller.login = async (req, res) => {
 
   const responseOutput = {
     user: userPayload,
-    accessToken: await generateToken(user.dataValues),
+    token: await generateToken(user.dataValues),
     error: null,
     success: true
   }
@@ -133,16 +134,16 @@ _controller.create = async (req, res) => {
 
 
 /**
- * User Select
+ * Select one user
  * @param {*} req 
  * @param {*} res 
  */
 _controller.findOne = async (req, res) => {
-  const id = req.params.id;
   let user = null;
+  let extractedDetails = extract(req);
 
   try{
-    user = await User.findByPk(id);
+    user = await User.findByPk(extractedDetails.userId);
   } catch(err){
     sendErrorResponse(req, res, {
       statusCode: 500,
@@ -152,7 +153,22 @@ _controller.findOne = async (req, res) => {
   }
 
   if (user) {
-    res.send(user);
+    // All good. Send the output
+    delete user.dataValues.userPassword;
+    delete user.dataValues.createdAt;
+    delete user.dataValues.updatedAt;
+
+    const userPayload = {
+      ...user.dataValues,
+      userInfo: {}
+    }
+
+    const responseOutput = {
+      user: userPayload,
+      error: null,
+      success: true
+    }
+    res.send(responseOutput);
   } else {
     sendErrorResponse(req, res, {
       statusCode: 404,

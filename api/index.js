@@ -41,7 +41,9 @@ app.use(bodyParser.json())
  * Import Routes
  */
 
-require('./routes/user.routes.js')(app);
+(require('./routes')).forEach( (route) => {
+    route(app);
+});
 
 /**
  * Set Port and Listen
