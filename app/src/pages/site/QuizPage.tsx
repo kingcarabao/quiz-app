@@ -1,5 +1,6 @@
 import Page from '../../components/Page/index';
 import Quiz from '../../components/Quiz';
+import { Container } from '@mui/material';
 
 /**
  *
@@ -9,8 +10,9 @@ import Quiz from '../../components/Quiz';
 export default function QuizPage() {
   return (
     <Page>
-      <div>QuizPage hoi</div>
-      <Quiz />
+      <Container>
+        <Quiz />
+      </Container>
     </Page>
   );
 }

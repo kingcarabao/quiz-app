@@ -9,7 +9,7 @@ localHttp.interceptors.response.use(
 
 const quizHttp = axios.create({ baseURL: process.env.REACT_APP_API_QUIZ_URL });
 
-localHttp.interceptors.response.use(
+quizHttp.interceptors.response.use(
   (response) => response,
   (error) => Promise.reject((error.response && error.response.data) || 'Something went wrong')
 );

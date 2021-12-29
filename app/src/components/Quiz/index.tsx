@@ -1,29 +1,22 @@
 import { useState, useEffect } from 'react';
 import DataFetcher from '../DataFetcher';
-
-interface Props {
-    quiz?: any;
-}
-
-function QuizComponent(props: Props) {
-  useEffect(() => {
-
-  });
-  return (
-    <>
-      <p>QuizCompo</p>
-      <p>{JSON.stringify(props.quiz)}</p>
-    </>
-  );
-}
+import useQueryParams from '../../hooks/useQueryParams';
+import QuizComponent from './QuizComponent';
 
 export default function Quiz() {
-  const resourceUrl = '/quiz-schedule?quizSetItemId=18';
-  const resourceParams = '';
+  const query = useQueryParams();
+
+  const resourceUrl = '';
+  const resourceParams = {
+    category: query.get('category'),
+    amount: query.get('amount'),
+    difficulty: query.get('difficulty'),
+    type: query.get('type')
+  };
   const resourceName = 'quiz';
 
   return (
-    <DataFetcher resourceUrl={resourceUrl} resourceName={resourceName} resourceParams={resourceParams}>
+    <DataFetcher resourceUrl={resourceUrl} resourceName={resourceName} resourceParams={resourceParams} httpClient="quiz">
       <QuizComponent />
     </DataFetcher>
   );
