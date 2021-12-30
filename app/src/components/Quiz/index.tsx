@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import DataFetcher from '../DataFetcher';
 import useQueryParams from '../../hooks/useQueryParams';
-import QuizComponent from './QuizComponent';
+import QuizComponent from './QuizContainer';
 
 export default function Quiz() {
   const query = useQueryParams();

@@ -10,7 +10,7 @@ export default function QuizDetails (props: Props) {
     const { title, children } = props;
     return (
         <>
-            <Card>
+            <Card sx={{ mb: 2 }}>
                 <CardHeader
                     title={title}
                 />
