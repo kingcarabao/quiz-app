@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import DataFetcher from '../DataFetcher';
 import useQueryParams from '../../hooks/useQueryParams';
-import QuizComponent from './QuizContainer';
+import QuizContainer from './QuizContainer';
 
 export default function Quiz() {
   const query = useQueryParams();
@@ -16,8 +16,13 @@ export default function Quiz() {
   const resourceName = 'quiz';
 
   return (
-    <DataFetcher resourceUrl={resourceUrl} resourceName={resourceName} resourceParams={resourceParams} httpClient="quiz">
-      <QuizComponent />
+    <DataFetcher
+      resourceUrl={resourceUrl}
+      resourceName={resourceName}
+      resourceParams={resourceParams}
+      httpClient="quiz"
+    >
+      <QuizContainer />
     </DataFetcher>
   );
 }

@@ -7,7 +7,7 @@ interface Question {
     choices: string[];
     correctAnswer: string;
     userAnswer: string;
-  }
+}
 
 interface Props {
     question: Question;
@@ -18,7 +18,7 @@ export default function Question(props: Props) {
     const spawns = useChildrenSpawner(props.children);
     return (
         <Card>
-            <CardHeader title={props.question.question} />
+            <CardHeader tabIndex={1} title={props.question.question} sx={{ minHeight: 65 }} />
             <CardContent>
                 {spawns}
             </CardContent>
