@@ -17,12 +17,16 @@ interface Props {
 }
 
 export default function MultipleChoice(props: Props) {
-    const { choices, setValue } = props;
+    const { value, choices, setValue } = props;
     const [radioVal, setRadioVal] = useState('');
 
     useEffect(() => {
+        setRadioVal(value);
+    }, [value]);
+
+    useEffect(() => {
         setValue(radioVal);
-    },[radioVal, setValue])
+    },[radioVal, setValue]);
     
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setRadioVal((event.target as HTMLInputElement).value);

@@ -3,7 +3,6 @@ import QuizDetails from '../QuizDetails';
 import Question from '../Question';
 import MultipleChoice from '../MultipleChoice';
 import QuizControls from '../QuizControls';
-import { StringLiteralLike } from 'typescript';
 
 interface Question {
   question: string;
