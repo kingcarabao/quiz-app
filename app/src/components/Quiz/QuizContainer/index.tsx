@@ -3,6 +3,9 @@ import QuizDetails from '../QuizDetails';
 import Question from '../Question';
 import MultipleChoice from '../MultipleChoice';
 import QuizControls from '../QuizControls';
+import ProgressBar from '../ProgressBar';
+import QuizResult from '../QuizResult';
+import LoadingScreen from '../../LoadingScreen';
 
 interface Question {
   question: string;
@@ -31,15 +34,23 @@ export default function QuizComponent(props: Props) {
   const title = quiz ? quiz.results[0].category : 'No title';
   const [currentIdx, setCurrentIndex] = useState(0);
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [totalAnswered, setTotalAnswered] = useState(0);
+  const [isFinished, setIsFinished] = useState(false);
+  const [score, setScore] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
+
     if(quiz) {
       setQuestions(
         quiz.results.map((result: Result) => {
-  
+
           const allChoices = result.incorrect_answers;
           allChoices.push(result.correct_answer);
-  
+          // randomizes the choices
+          allChoices.sort(() => Math.random() - 0.5);
+
           return {
             question: result.question,
             choices: allChoices,
@@ -48,31 +59,54 @@ export default function QuizComponent(props: Props) {
           }
         })
       );
+      setIsLoading(false);
     }
   }, [quiz])
 
+  const scoreQuiz = () => {
+    const result = questions.reduce((prev, curr) => {
+      return curr.correctAnswer === curr.userAnswer ? prev + 1 : prev
+    }, 0);
+
+    setScore(result);
+  };
+
   const setAnswer = (answer: string, idx: number) => {
+    if(!answer)
+      return;
+
     setQuestions((items) => {
-      let modifiedItems = items;
-      modifiedItems[idx].userAnswer = answer;
-      return modifiedItems;
+      if (items[idx].userAnswer === '')
+        setTotalAnswered((i)=>i+1);
+      
+      items[idx].userAnswer = answer;
+      console.table(items);
+      return items;
     });
   };
 
   const ShowControls = () => {
     const navigateQuiz = (where: string) => {
-      setCurrentIndex((current) => {
-        let idx = current;
-        if(where === 'back'){
-          if (idx <= 0)
-            return idx;
-          return --idx;
-        } else {
-          if (idx >= questions.length-1)
-            return idx;
-          return ++idx;
-        }
-      });
+      switch(where) {
+        case 'back': 
+          setCurrentIndex((current) => {
+            if (current <= 0)
+              return current;
+            return --current;
+          });
+          break;
+        case 'next': 
+          setCurrentIndex((current) => {
+            if (current >= questions.length-1)
+              return current;
+            return ++current;
+          });
+          break;
+        case 'end': 
+          scoreQuiz();
+          setIsFinished(true);
+          break;
+      }
     };
 
     return (
@@ -81,6 +115,7 @@ export default function QuizComponent(props: Props) {
         navigate={(where: string) => navigateQuiz(where)}
         backIsDisabled={currentIdx <= 0}
         nextIsDisabled={currentIdx >= questions.length-1}
+        isComplete={totalAnswered === questions.length}
       />
     )
   }
@@ -105,10 +140,28 @@ export default function QuizComponent(props: Props) {
 
   return (
     <>
-      <QuizDetails title={title}/>
-      { ShowQuestion() }
-      { ShowControls() }
-      { JSON.stringify(questions) }
+      {
+        isLoading
+        ?
+          <LoadingScreen/>
+        :
+          <>
+            {
+              isFinished
+              ?
+                <QuizResult total={questions.length} score={score}/>
+              :
+                <>
+                  <QuizDetails title={title}>
+                    <ProgressBar total={questions.length} current={totalAnswered}/>
+                  </QuizDetails>
+                  { ShowQuestion() }
+                  { ShowControls() }
+                </>
+            }
+          </>
+      }
     </>
+    
   );
 }

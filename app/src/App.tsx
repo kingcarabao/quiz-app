@@ -5,7 +5,7 @@ import blueGrey from '@mui/material/colors/blueGrey';
 
 function App() {
   return (
-    <div style={{ backgroundColor: blueGrey[50], height: '100vh' }}>
+    <div style={{ backgroundColor: blueGrey[50], minHeight: '100vh' }}>
       <Router />
     </div>
   );

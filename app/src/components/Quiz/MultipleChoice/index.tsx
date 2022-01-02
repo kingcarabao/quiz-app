@@ -18,24 +18,22 @@ interface Props {
 
 export default function MultipleChoice(props: Props) {
     const { value, choices, setValue } = props;
-    const [radioVal, setRadioVal] = useState('');
-
+    const [radioValue, setRadioValue] = useState('');
+    
     useEffect(() => {
-        setRadioVal(value);
+        setRadioValue(value);
     }, [value]);
-
-    useEffect(() => {
-        setValue(radioVal);
-    },[radioVal, setValue]);
     
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRadioVal((event.target as HTMLInputElement).value);
+        console.log('changed')
+        setRadioValue((event.target as HTMLInputElement).value);
+        setValue((event.target as HTMLInputElement).value);
     };
 
     const RenderChoices = () => {
         return (
             choices.map((choice: string, index) => (
-                <Grid item sm={12} md={6} xl={3} key={choice}>
+                <Grid item sm={12} md={6} key={choice}>
                     <Paper variant="outlined">
                         <FormControlLabel
                             value={choice}
@@ -57,7 +55,7 @@ export default function MultipleChoice(props: Props) {
                 aria-label="choices"
                 defaultValue=""
                 name="radio-buttons-group"
-                value={radioVal}
+                value={radioValue}
                 onChange={handleChange}
             >
                 <Grid container spacing={2}>

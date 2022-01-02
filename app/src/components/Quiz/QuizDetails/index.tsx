@@ -19,7 +19,6 @@ export default function QuizDetails (props: Props) {
                     ? <CardContent>{children}</CardContent>
                     : null
                 }
-                
             </Card>
         </>
     );

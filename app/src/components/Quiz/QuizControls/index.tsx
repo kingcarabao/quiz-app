@@ -4,17 +4,19 @@ import { Stack, Grid, Button } from '@mui/material';
 interface Props {
   backIsDisabled: boolean;
   nextIsDisabled: boolean;
-  navigate: Function
+  navigate: Function;
+  isComplete: boolean;
   sx?: any;
 }
 
 export default function Choice(props: Props) {
-  const { backIsDisabled, nextIsDisabled, navigate, sx } = props;
+  const { backIsDisabled, nextIsDisabled, navigate, isComplete, sx } = props;
   return (
     <Grid container sx={{ ...sx }} spacing={2}>
       <Grid item sm={6}>
         <Button
           fullWidth
+          size="large"
           variant="outlined"
           onClick={() => navigate('back')}
           disabled={backIsDisabled}
@@ -26,12 +28,14 @@ export default function Choice(props: Props) {
       <Grid item sm={6}>
         <Button
           fullWidth
+          size="large"
+          color={ isComplete && nextIsDisabled ? 'success' : 'primary' }
           variant="contained"
-          onClick={() => navigate('next')}
-          disabled={nextIsDisabled}
+          onClick={() => isComplete && nextIsDisabled ? navigate('end') : navigate('next')}
+          disabled={nextIsDisabled && !isComplete ? true : false}
           tabIndex={7}
         >
-          Next
+          { isComplete && nextIsDisabled ? 'See Result' : 'Next' }
         </Button>
       </Grid>
     </Grid>

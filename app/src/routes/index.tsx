@@ -38,6 +38,7 @@ const Routes = () => {
       path: '/app',
       element: <AuthGuard><ClientLayout /></AuthGuard>,
       children: [
+        { path: '', element: <Navigate to="/app/quiz-list" /> },
         { path: 'quiz-list', element: <QuizListPage /> },
         { path: 'quiz', element: <QuizPage /> },
       ],
