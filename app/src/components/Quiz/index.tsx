@@ -11,7 +11,7 @@ export default function Quiz() {
     category: query.get('category'),
     amount: query.get('amount'),
     difficulty: query.get('difficulty'),
-    type: query.get('type')
+    type: query.get('type'),
   };
   const resourceName = 'quiz';
 

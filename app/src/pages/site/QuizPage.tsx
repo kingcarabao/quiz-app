@@ -1,6 +1,6 @@
+import { Container } from '@mui/material';
 import Page from '../../components/Page/index';
 import Quiz from '../../components/Quiz';
-import { Container } from '@mui/material';
 
 /**
  *

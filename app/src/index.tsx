@@ -10,11 +10,11 @@ ReactDOM.render(
   <StrictMode>
     <HelmetProvider>
       <AuthProvider>
-        <App/>
+        <App />
       </AuthProvider>
     </HelmetProvider>
   </StrictMode>,
-  document.getElementById('root'),
+  document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

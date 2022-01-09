@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { JWTContextType } from '../@types/authenticate';
+import React, { useEffect, useState, useRef } from "react";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { JWTContextType } from "../@types/authenticate";
 // hooks
-import useAuth from '../hooks/useAuth';
+import useAuth from "../hooks/useAuth";
 
 // ----------------------------------------------------------------------
 
@@ -14,16 +14,18 @@ export default function AuthGuard({ children }: AuthGuardProps) {
   const navigate = useNavigate();
   const [auth, error] = useAuth();
   const { pathname } = useLocation();
-  const [requestedLocation, setRequestedLocation] = useState<string | null>(null);
+  const [requestedLocation, setRequestedLocation] = useState<string | null>(
+    null
+  );
 
-  const blockAccess = () => { 
+  const blockAccess = () => {
     if (pathname !== requestedLocation) {
       setRequestedLocation(pathname);
     }
-    navigate('/login');
+    navigate("/login");
   };
 
-  if(auth){
+  if (auth) {
     if (!auth.isAuthenticated) {
       blockAccess();
     }

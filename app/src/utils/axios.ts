@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const localHttp = axios.create({ baseURL: process.env.REACT_APP_API_LOCAL_URL });
+const localHttp = axios.create({
+  baseURL: process.env.REACT_APP_API_LOCAL_URL,
+});
 
 localHttp.interceptors.response.use(
   (response) => response,

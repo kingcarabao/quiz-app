@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Paper,
   Table,
@@ -8,8 +8,8 @@ import {
   TableHead,
   TableRow,
   Pagination,
-} from '@mui/material';
-import { Column } from '../../@types/table';
+} from "@mui/material";
+import { Column } from "../../@types/table";
 
 interface Props {
   headColumns: Column[];
@@ -19,15 +19,10 @@ interface Props {
 }
 
 export default function TablePrime(props: Props) {
-  const {
-    headColumns,
-    columns,
-    rows,
-    rowId
-  } = props;
+  const { headColumns, columns, rows, rowId } = props;
   const [isLoading, setIsLoading] = useState(false);
 
-  const ShowTableHead = () => {
+  function ShowTableHead() {
     const headCols = headColumns.map((col: Column, idx: number) => (
       <TableCell key={`head-cell-${idx}`} align={col.align}>
         {col.data}
@@ -35,11 +30,14 @@ export default function TablePrime(props: Props) {
     ));
 
     return (
-      <TableRow hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+      <TableRow
+        hover
+        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+      >
         {headCols}
       </TableRow>
     );
-  };
+  }
 
   const ShowTableBody = () => {
     let bodyCols = null;
@@ -47,8 +45,11 @@ export default function TablePrime(props: Props) {
       bodyCols = rows.map((row) => (
         <TableRow hover key={`row-${row[rowId]}`}>
           {columns.map((col: Column) => (
-            <TableCell key={`body-cell-${col.data}-${row[rowId]}-`} align={col.align}>
-              {typeof col.data === 'function' ? col.data(row) : row[col.data]}
+            <TableCell
+              key={`body-cell-${col.data}-${row[rowId]}-`}
+              align={col.align}
+            >
+              {typeof col.data === "function" ? col.data(row) : row[col.data]}
             </TableCell>
           ))}
         </TableRow>
@@ -57,16 +58,16 @@ export default function TablePrime(props: Props) {
     return bodyCols;
   };
 
-  const ShowTable = () => (
-    <>
+  function ShowTable() {
+    return (
       <TableContainer sx={{ minWidth: 800 }}>
         <Table size="small" aria-label="simple table">
           <TableHead>{ShowTableHead()}</TableHead>
           <TableBody>{ShowTableBody()}</TableBody>
         </Table>
       </TableContainer>
-    </>
-  );
+    );
+  }
 
   return ShowTable();
 }

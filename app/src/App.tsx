@@ -1,7 +1,7 @@
 import './App.css';
 // routes
-import Router from './routes';
 import blueGrey from '@mui/material/colors/blueGrey';
+import Router from './routes';
 
 function App() {
   return (

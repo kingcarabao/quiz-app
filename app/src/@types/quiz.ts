@@ -1,3 +1,3 @@
-export interface quiz{
-    quizName: string;
+export interface quiz {
+  quizName: string;
 }

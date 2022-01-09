@@ -1,4 +1,4 @@
-import React, { forwardRef, createRef } from 'react';
+import React, { forwardRef, createRef } from "react";
 
 // type InputElement = HTMLInputElement;
 // type InputChangeEvent = React.ChangeEvent<InputElement>;
@@ -51,7 +51,7 @@ export default function InputField(props: Props) {
     <>
       {/* { defaultProps.label === '' ? <label>label</label> : null } */}
       {/* <input { ...inputAttribs }/> */}
-      <input type="text"/>
+      <input type="text" />
     </>
   );
 }

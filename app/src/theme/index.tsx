@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { createTheme } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
 
@@ -23,9 +23,5 @@ const theme = createTheme({
 });
 
 export default function ThemeConfig() {
-    return (
-        <div>
-            
-        </div>
-    )
+  return <div />;
 }

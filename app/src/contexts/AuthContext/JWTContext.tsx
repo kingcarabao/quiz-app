@@ -1,17 +1,17 @@
-import { localHttp } from '../../utils/axios';
-import React, { createContext, useReducer, useEffect } from 'react';
-import useChildrenSpawner from '../../hooks/useChildrenSpawner';
-import { JWTContextType, AuthLogin } from '../../@types/authenticate';
-import { JWTReducer, JWTInitialState } from './reducer';
-import { isValidToken, setSession } from '../../utils/jwt';
+import React, { createContext, useReducer, useEffect } from "react";
+import { localHttp } from "../../utils/axios";
+import useChildrenSpawner from "../../hooks/useChildrenSpawner";
+import { JWTContextType, AuthLogin } from "../../@types/authenticate";
+import { JWTReducer, JWTInitialState } from "./reducer";
+import { isValidToken, setSession } from "../../utils/jwt";
 
 const JWTContext = createContext<JWTContextType>({
   isAuthenticated: false,
-  login: null
+  login: null,
 });
 
 interface Props {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export default function AuthProvider({ children }: Props) {
@@ -22,37 +22,37 @@ export default function AuthProvider({ children }: Props) {
   useEffect(() => {
     (async () => {
       try {
-        const accessToken = window.localStorage.getItem('accessToken');
+        const accessToken = window.localStorage.getItem("accessToken");
         if (accessToken && isValidToken(accessToken)) {
           setSession(accessToken);
-          const response = await localHttp.get('/users');
-            const { user } = response.data;
-            console.log(user);
-            dispatch({
-              type: 'INITIALIZE',
-              payload: {
-                isAuthenticated: true,
-                user: user,
-                token: accessToken
-              }
-            });
+          const response = await localHttp.get("/users");
+          const { user } = response.data;
+          console.log(user);
+          dispatch({
+            type: "INITIALIZE",
+            payload: {
+              isAuthenticated: true,
+              user,
+              token: accessToken,
+            },
+          });
         } else {
           dispatch({
-            type: 'INITIALIZE',
+            type: "INITIALIZE",
             payload: {
               isAuthenticated: false,
-              user: null
-            }
+              user: null,
+            },
           });
         }
       } catch (err) {
         console.error(err);
         dispatch({
-          type: 'INITIALIZE',
+          type: "INITIALIZE",
           payload: {
             isAuthenticated: false,
-            user: null
-          }
+            user: null,
+          },
         });
       }
     })();
@@ -63,20 +63,19 @@ export default function AuthProvider({ children }: Props) {
    */
   const login = async (values: AuthLogin) => {
     try {
-      const response = await localHttp.post('/users/login', values);
+      const response = await localHttp.post("/users/login", values);
       const { success, user, token } = response.data;
 
       if (success) {
         const payload = {
-          user: user,
-          token: token,
+          user,
+          token,
         };
         dispatch({ type: "LOGIN", payload });
         setSession(token);
         return [user, null];
-      } else {
-        return [null, new Error('Login failed')];
       }
+      return [null, new Error("Login failed")];
     } catch (err: any) {
       return [null, new Error(`Login failed: ${err.message}`)];
     }
@@ -86,10 +85,12 @@ export default function AuthProvider({ children }: Props) {
    * Here's the Provider
    */
   return (
-    <JWTContext.Provider value={{
-      isAuthenticated,
-      login,
-    }}>
+    <JWTContext.Provider
+      value={{
+        isAuthenticated,
+        login,
+      }}
+    >
       {spawns}
     </JWTContext.Provider>
   );

@@ -1,5 +1,5 @@
-import _ from 'lodash';
-import { useState, useEffect, useRef } from 'react';
+import _ from "lodash";
+import { useState, useEffect, useRef } from "react";
 import {
   Paper,
   Table,
@@ -9,12 +9,12 @@ import {
   TableHead,
   TableRow,
   Pagination,
-} from '@mui/material';
-import { localHttp } from '../../utils/axios';
+} from "@mui/material";
+import { localHttp } from "../../utils/axios";
 
 interface OrderBy {
   column: string;
-  direction: 'ASC' | 'DESC';
+  direction: "ASC" | "DESC";
 }
 
 interface Filter {
@@ -32,7 +32,7 @@ interface Params {
 
 interface Column {
   data: any;
-  align: 'left' | 'center' | 'right' | 'justify' | 'inherit' | undefined;
+  align: "left" | "center" | "right" | "justify" | "inherit" | undefined;
 }
 
 interface Props {
@@ -58,9 +58,9 @@ export default function TablePrime(props: Props) {
     responseKey,
     forceReload = false,
     forceReloadActionType = {
-      reload: '',
-      doneReload: ''
-    }
+      reload: "",
+      doneReload: "",
+    },
   } = props;
 
   const [rows, setRows] = useState([]);
@@ -85,14 +85,16 @@ export default function TablePrime(props: Props) {
       offset: offset.current,
       filter,
       pagination,
-      options: filterOptions
+      options: filterOptions,
     };
 
     await localHttp
       .get(fetchUrl, { params })
       .then((response) => {
         offset.current = pagination * limit - limit;
-        totalPages.current = Math.ceil(response.data[responseKey].totalRows / limit);
+        totalPages.current = Math.ceil(
+          response.data[responseKey].totalRows / limit
+        );
         setRows(response.data[responseKey].data);
         setIsLoading(false);
       })
@@ -106,7 +108,7 @@ export default function TablePrime(props: Props) {
     setPagination(value);
   };
 
-  const ShowTableHead = () => {
+  function ShowTableHead() {
     const headCols = headColumns.map((col: Column, idx: number) => (
       <TableCell key={`head-cell-${idx}`} align={col.align}>
         {col.data}
@@ -114,11 +116,14 @@ export default function TablePrime(props: Props) {
     ));
 
     return (
-      <TableRow hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+      <TableRow
+        hover
+        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+      >
         {headCols}
       </TableRow>
     );
-  };
+  }
 
   const ShowTableBody = () => {
     let bodyCols = null;
@@ -127,7 +132,7 @@ export default function TablePrime(props: Props) {
         <TableRow hover key={`row-body-${idx}`}>
           {columns.map((col: Column, idx: number) => (
             <TableCell key={`body-cell-${idx}`} align={col.align}>
-              {typeof col.data === 'function' ? col.data(row) : row[col.data]}
+              {typeof col.data === "function" ? col.data(row) : row[col.data]}
             </TableCell>
           ))}
         </TableRow>
@@ -137,24 +142,26 @@ export default function TablePrime(props: Props) {
     return bodyCols;
   };
 
-  const ShowTable = () => (
-    <>
-      <TableContainer sx={{ minWidth: 800, mt: 3 }}>
-        <Table size="small" aria-label="simple table">
-          <TableHead>{ShowTableHead()}</TableHead>
-          <TableBody>{ShowTableBody()}</TableBody>
-        </Table>
-      </TableContainer>
-      <Paper sx={{ p: 1, m: 2 }}>
-        <Pagination
-          count={totalPages.current}
-          page={pagination}
-          onChange={handlePagination}
-          color="primary"
-        />
-      </Paper>
-    </>
-  );
+  function ShowTable() {
+    return (
+      <>
+        <TableContainer sx={{ minWidth: 800, mt: 3 }}>
+          <Table size="small" aria-label="simple table">
+            <TableHead>{ShowTableHead()}</TableHead>
+            <TableBody>{ShowTableBody()}</TableBody>
+          </Table>
+        </TableContainer>
+        <Paper sx={{ p: 1, m: 2 }}>
+          <Pagination
+            count={totalPages.current}
+            page={pagination}
+            onChange={handlePagination}
+            color="primary"
+          />
+        </Paper>
+      </>
+    );
+  }
 
   return ShowTable();
 }
