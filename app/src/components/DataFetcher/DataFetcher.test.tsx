@@ -9,6 +9,5 @@ test('renders data fetcher component', () => {
     children: null,
   };
   render(<DataFetcher {...testProps} />);
-  // eslint-disable-next-line testing-library/no-debugging-utils
   screen.debug();
 });

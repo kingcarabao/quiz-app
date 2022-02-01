@@ -1,9 +1,9 @@
-import React, { Suspense, lazy } from "react";
-import { Navigate } from "react-router";
-import { BrowserRouter, useRoutes } from "react-router-dom";
-import LoadingScreen from "../components/LoadingScreen";
-import AuthGuard from "../guards/AuthGuard";
-import GuestGuard from "../guards/GuestGuard";
+import React, { Suspense, lazy } from 'react';
+import { Navigate } from 'react-router';
+import { BrowserRouter, useRoutes } from 'react-router-dom';
+import LoadingScreen from '../components/LoadingScreen';
+import AuthGuard from '../guards/AuthGuard';
+import GuestGuard from '../guards/GuestGuard';
 
 /**
  * lazy functions needs to be wrapped inside Suspense comp
@@ -24,17 +24,13 @@ const LoadComponent = (Component: React.ElementType) =>
  */
 
 // Layouts
-const GuestLayout = LoadComponent(lazy(() => import("../layouts/GuestLayout")));
-const ClientLayout = LoadComponent(
-  lazy(() => import("../layouts/ClientLayout"))
-);
+const GuestLayout = LoadComponent(lazy(() => import('../layouts/GuestLayout')));
+const ClientLayout = LoadComponent(lazy(() => import('../layouts/ClientLayout')));
 
 // Pages
-const QuizPage = LoadComponent(lazy(() => import("../pages/site/QuizPage")));
-const QuizListPage = LoadComponent(
-  lazy(() => import("../pages/site/QuizListPage"))
-);
-const LoginPage = LoadComponent(lazy(() => import("../pages/site/LoginPage")));
+const QuizPage = LoadComponent(lazy(() => import('../pages/site/QuizPage')));
+const QuizListPage = LoadComponent(lazy(() => import('../pages/site/QuizListPage')));
+const LoginPage = LoadComponent(lazy(() => import('../pages/site/LoginPage')));
 
 /**
  *
@@ -43,28 +39,28 @@ const LoginPage = LoadComponent(lazy(() => import("../pages/site/LoginPage")));
 const Routes = () =>
   useRoutes([
     {
-      path: "/",
+      path: '/',
       element: (
         <GuestGuard>
           <GuestLayout />
         </GuestGuard>
       ),
       children: [
-        { path: "", element: <Navigate to="/login" /> },
-        { path: "login", element: <LoginPage /> },
+        { path: '', element: <Navigate to="/login" /> },
+        { path: 'login', element: <LoginPage /> },
       ],
     },
     {
-      path: "/app",
+      path: '/app',
       element: (
         <AuthGuard>
           <ClientLayout />
         </AuthGuard>
       ),
       children: [
-        { path: "", element: <Navigate to="/app/quiz-list" /> },
-        { path: "quiz-list", element: <QuizListPage /> },
-        { path: "quiz", element: <QuizPage /> },
+        { path: '', element: <Navigate to="/app/quiz-list" /> },
+        { path: 'quiz-list', element: <QuizListPage /> },
+        { path: 'quiz', element: <QuizPage /> },
       ],
     },
   ]);

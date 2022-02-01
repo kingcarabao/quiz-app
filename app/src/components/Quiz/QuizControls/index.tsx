@@ -1,5 +1,5 @@
-import React from "react";
-import { Stack, Grid, Button } from "@mui/material";
+import React from 'react';
+import { Stack, Grid, Button } from '@mui/material';
 
 interface Props {
   backIsDisabled: boolean;
@@ -18,7 +18,7 @@ export default function Choice(props: Props) {
           fullWidth
           size="large"
           variant="outlined"
-          onClick={() => navigate("back")}
+          onClick={() => navigate('back')}
           disabled={backIsDisabled}
           tabIndex={6}
         >
@@ -29,15 +29,13 @@ export default function Choice(props: Props) {
         <Button
           fullWidth
           size="large"
-          color={isComplete && nextIsDisabled ? "success" : "primary"}
+          color={isComplete && nextIsDisabled ? 'success' : 'primary'}
           variant="contained"
-          onClick={() =>
-            isComplete && nextIsDisabled ? navigate("end") : navigate("next")
-          }
+          onClick={() => (isComplete && nextIsDisabled ? navigate('end') : navigate('next'))}
           disabled={!!(nextIsDisabled && !isComplete)}
           tabIndex={7}
         >
-          {isComplete && nextIsDisabled ? "See Result" : "Next"}
+          {isComplete && nextIsDisabled ? 'See Result' : 'Next'}
         </Button>
       </Grid>
     </Grid>

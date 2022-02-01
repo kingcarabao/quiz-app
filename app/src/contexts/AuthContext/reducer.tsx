@@ -1,14 +1,14 @@
-import { AuthState } from "../../@types/authenticate";
+import { AuthState } from '../../@types/authenticate';
 
 const JWTInitialState: AuthState = {
   user: {
-    userName: "",
-    userEmail: "",
-    userType: "client",
+    userName: '',
+    userEmail: '',
+    userType: 'client',
     userInfo: {
-      firstName: "",
-      lastName: "",
-      middleName: "",
+      firstName: '',
+      lastName: '',
+      middleName: '',
     },
   },
   token: null,
@@ -17,7 +17,7 @@ const JWTInitialState: AuthState = {
 
 const JWTReducer = (state: AuthState, action: any) => {
   switch (action.type) {
-    case "INITIALIZE": {
+    case 'INITIALIZE': {
       return {
         ...state,
         isAuthenticated: action.payload.isAuthenticated,
@@ -25,7 +25,7 @@ const JWTReducer = (state: AuthState, action: any) => {
         token: action.payload.token,
       };
     }
-    case "LOGIN": {
+    case 'LOGIN': {
       return {
         ...state,
         isAuthenticated: true,

@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
-import { Card, CardHeader, CardContent, Button } from "@mui/material";
-import TableSimple from "../TableSimple";
-import { quizHttp } from "../../utils/axios";
-import { Column } from "../../@types/table";
+import React, { useState, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Card, CardHeader, CardContent, Button } from '@mui/material';
+import TableSimple from '../TableSimple';
+import { quizHttp } from '../../utils/axios';
+import { Column } from '../../@types/table';
 
 interface Quiz {
   id: number;
@@ -21,8 +21,8 @@ interface Query {
 }
 
 const amount = 10;
-const difficulty = "medium";
-const type = "multiple";
+const difficulty = 'medium';
+const type = 'multiple';
 
 export default function QuizList() {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ export default function QuizList() {
       const params = { ...query };
       delete params.qId;
       delete params.title;
-      const response = await quizHttp.get("", { params });
+      const response = await quizHttp.get('', { params });
       if (!response.data) {
         return;
       }
@@ -53,7 +53,7 @@ export default function QuizList() {
     setQueries([
       {
         qId: 0,
-        title: "General Knowledge",
+        title: 'General Knowledge',
         category: 9,
         amount,
         difficulty,
@@ -61,7 +61,7 @@ export default function QuizList() {
       },
       {
         qId: 1,
-        title: "Entertainment: Books",
+        title: 'Entertainment: Books',
         category: 10,
         amount,
         difficulty,
@@ -69,7 +69,7 @@ export default function QuizList() {
       },
       {
         qId: 2,
-        title: "Entertainment: Films",
+        title: 'Entertainment: Films',
         category: 11,
         amount,
         difficulty,
@@ -77,7 +77,7 @@ export default function QuizList() {
       },
       {
         qId: 3,
-        title: "Entertainment: Music & Theater",
+        title: 'Entertainment: Music & Theater',
         category: 12,
         amount,
         difficulty,
@@ -85,7 +85,7 @@ export default function QuizList() {
       },
       {
         qId: 4,
-        title: "Entertainment: Television",
+        title: 'Entertainment: Television',
         category: 13,
         amount,
         difficulty,
@@ -93,7 +93,7 @@ export default function QuizList() {
       },
       {
         qId: 5,
-        title: "Science: Computers",
+        title: 'Science: Computers',
         category: 18,
         amount,
         difficulty,
@@ -101,7 +101,7 @@ export default function QuizList() {
       },
       {
         qId: 6,
-        title: "Animals",
+        title: 'Animals',
         category: 27,
         amount,
         difficulty,
@@ -117,42 +117,35 @@ export default function QuizList() {
   }, [memoizedQuizzes]);
 
   const headColumns: Column[] = [
-    { data: "Title", align: "left" },
-    { data: "Items", align: "right" },
-    { data: "", align: "right" },
+    { data: 'Title', align: 'left' },
+    { data: 'Items', align: 'right' },
+    { data: '', align: 'right' },
   ];
 
   const columns: Column[] = [
-    { data: "title", align: "left" },
-    { data: "amount", align: "right" },
+    { data: 'title', align: 'left' },
+    { data: 'amount', align: 'right' },
     {
       data: (row: any) => (
         <Button size="small" variant="contained" onClick={openQuiz(row)}>
           Open
         </Button>
       ),
-      align: "right",
+      align: 'right',
     },
   ];
 
-  const openQuiz =
-    ({ category, amount, difficulty, type }: Query) =>
-    () => {
-      navigate(
-        `/app/quiz?category=${category}&amount=${amount}&difficulty=${difficulty}&type=${type}`
-      );
-    };
+  const openQuiz = (query: Query) => () => {
+    navigate(
+      `/app/quiz?category=${query.category}&amount=${query.amount}&difficulty=${query.difficulty}&type=${query.type}`
+    );
+  };
 
   return (
     <Card>
       <CardHeader title="Quiz List" />
       <CardContent>
-        <TableSimple
-          headColumns={headColumns}
-          columns={columns}
-          rows={queries}
-          rowId="qId"
-        />
+        <TableSimple headColumns={headColumns} columns={columns} rows={queries} rowId="qId" />
       </CardContent>
     </Card>
   );

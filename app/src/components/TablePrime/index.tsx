@@ -1,5 +1,5 @@
-import _ from "lodash";
-import { useState, useEffect, useRef } from "react";
+import _ from 'lodash';
+import { Children, useState, useEffect, useRef } from 'react';
 import {
   Paper,
   Table,
@@ -9,12 +9,12 @@ import {
   TableHead,
   TableRow,
   Pagination,
-} from "@mui/material";
-import { localHttp } from "../../utils/axios";
+} from '@mui/material';
+import { localHttp } from '../../utils/axios';
 
 interface OrderBy {
   column: string;
-  direction: "ASC" | "DESC";
+  direction: 'ASC' | 'DESC';
 }
 
 interface Filter {
@@ -32,7 +32,7 @@ interface Params {
 
 interface Column {
   data: any;
-  align: "left" | "center" | "right" | "justify" | "inherit" | undefined;
+  align: 'left' | 'center' | 'right' | 'justify' | 'inherit' | undefined;
 }
 
 interface Props {
@@ -58,8 +58,8 @@ export default function TablePrime(props: Props) {
     responseKey,
     forceReload = false,
     forceReloadActionType = {
-      reload: "",
-      doneReload: "",
+      reload: '',
+      doneReload: '',
     },
   } = props;
 
@@ -92,9 +92,7 @@ export default function TablePrime(props: Props) {
       .get(fetchUrl, { params })
       .then((response) => {
         offset.current = pagination * limit - limit;
-        totalPages.current = Math.ceil(
-          response.data[responseKey].totalRows / limit
-        );
+        totalPages.current = Math.ceil(response.data[responseKey].totalRows / limit);
         setRows(response.data[responseKey].data);
         setIsLoading(false);
       })
@@ -109,17 +107,12 @@ export default function TablePrime(props: Props) {
   };
 
   function ShowTableHead() {
-    const headCols = headColumns.map((col: Column, idx: number) => (
-      <TableCell key={`head-cell-${idx}`} align={col.align}>
-        {col.data}
-      </TableCell>
-    ));
+    const headCols = headColumns.map((col: Column) =>
+      Children.toArray(<TableCell align={col.align}>{col.data}</TableCell>)
+    );
 
     return (
-      <TableRow
-        hover
-        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-      >
+      <TableRow hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
         {headCols}
       </TableRow>
     );
@@ -128,15 +121,19 @@ export default function TablePrime(props: Props) {
   const ShowTableBody = () => {
     let bodyCols = null;
     if (rows) {
-      bodyCols = rows.map((row, idx) => (
-        <TableRow hover key={`row-body-${idx}`}>
-          {columns.map((col: Column, idx: number) => (
-            <TableCell key={`body-cell-${idx}`} align={col.align}>
-              {typeof col.data === "function" ? col.data(row) : row[col.data]}
-            </TableCell>
-          ))}
-        </TableRow>
-      ));
+      bodyCols = rows.map((row) =>
+        Children.toArray(
+          <TableRow hover>
+            {Children.toArray(
+              columns.map((col: Column) => (
+                <TableCell align={col.align}>
+                  {typeof col.data === 'function' ? col.data(row) : row[col.data]}
+                </TableCell>
+              ))
+            )}
+          </TableRow>
+        )
+      );
     }
 
     return bodyCols;

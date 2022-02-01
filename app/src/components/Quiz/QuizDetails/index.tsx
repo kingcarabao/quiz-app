@@ -1,5 +1,5 @@
-import React from "react";
-import { Card, CardHeader, CardContent, Typography } from "@mui/material";
+import React from 'react';
+import { Card, CardHeader, CardContent, Typography } from '@mui/material';
 
 interface Props {
   title: string;

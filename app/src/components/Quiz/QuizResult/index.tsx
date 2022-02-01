@@ -1,13 +1,6 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  Typography,
-  Button,
-  Box,
-} from "@mui/material";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Card, CardHeader, CardContent, Typography, Button, Box } from '@mui/material';
 
 interface Props {
   score: number;
@@ -26,12 +19,12 @@ export default function Question(props: Props) {
           {score} out of
           {total}
         </Typography>
-        <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
           <Button
             variant="contained"
-            sx={{ justifyContent: "center", textAlign: "center" }}
+            sx={{ justifyContent: 'center', textAlign: 'center' }}
             onClick={() => {
-              navigate("/app/quiz-list");
+              navigate('/app/quiz-list');
             }}
           >
             Go back to Quiz List

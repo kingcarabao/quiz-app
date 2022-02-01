@@ -1,4 +1,4 @@
-import React, { Children, isValidElement, cloneElement } from "react";
+import React, { Children, isValidElement, cloneElement } from 'react';
 
 type ExtraProps = any | null | undefined;
 
@@ -9,10 +9,7 @@ type ExtraProps = any | null | undefined;
  * @param extraProps
  * @returns
  */
-export default function SpawnChildren(
-  children: React.ReactNode,
-  extraProps?: ExtraProps
-) {
+export default function SpawnChildren(children: React.ReactNode, extraProps?: ExtraProps) {
   const renderChildren = () =>
     Children.map(children, (child) => {
       if (isValidElement(child)) {

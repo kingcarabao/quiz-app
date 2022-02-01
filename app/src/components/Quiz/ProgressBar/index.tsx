@@ -1,9 +1,7 @@
-import React from "react";
-import LinearProgress, {
-  LinearProgressProps,
-} from "@mui/material/LinearProgress";
-import { Card, CardHeader, CardContent, Typography } from "@mui/material";
-import LinearProgressWithLabel from "../../LinearProgressWithLabel";
+import React from 'react';
+import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
+import { Card, CardHeader, CardContent, Typography } from '@mui/material';
+import LinearProgressWithLabel from '../../LinearProgressWithLabel';
 
 interface Props {
   current: number;
@@ -18,7 +16,5 @@ export default function ProgressBar(props: Props) {
     setProgress(Math.round((current / total) * 100));
   }, [current, total]);
 
-  return (
-    <LinearProgressWithLabel value={progress} label={`${current}/${total}`} />
-  );
+  return <LinearProgressWithLabel value={progress} label={`${current}/${total}`} />;
 }

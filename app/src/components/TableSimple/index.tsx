@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Paper,
   Table,
@@ -8,8 +8,8 @@ import {
   TableHead,
   TableRow,
   Pagination,
-} from "@mui/material";
-import { Column } from "../../@types/table";
+} from '@mui/material';
+import { Column } from '../../@types/table';
 
 interface Props {
   headColumns: Column[];
@@ -30,10 +30,7 @@ export default function TablePrime(props: Props) {
     ));
 
     return (
-      <TableRow
-        hover
-        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-      >
+      <TableRow hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
         {headCols}
       </TableRow>
     );
@@ -45,11 +42,8 @@ export default function TablePrime(props: Props) {
       bodyCols = rows.map((row) => (
         <TableRow hover key={`row-${row[rowId]}`}>
           {columns.map((col: Column) => (
-            <TableCell
-              key={`body-cell-${col.data}-${row[rowId]}-`}
-              align={col.align}
-            >
-              {typeof col.data === "function" ? col.data(row) : row[col.data]}
+            <TableCell key={`body-cell-${col.data}-${row[rowId]}-`} align={col.align}>
+              {typeof col.data === 'function' ? col.data(row) : row[col.data]}
             </TableCell>
           ))}
         </TableRow>

@@ -1,5 +1,5 @@
-import jwtDecode from "jwt-decode";
-import { localHttp } from "./axios";
+import jwtDecode from 'jwt-decode';
+import { localHttp } from './axios';
 
 export const isValidToken = (accessToken: string) => {
   if (!accessToken) return false;
@@ -17,10 +17,10 @@ export const accountType = (accessToken: string) => {
 
 export const setSession = (accessToken: string | null) => {
   if (accessToken) {
-    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem('accessToken', accessToken);
     localHttp.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
   } else {
-    localStorage.removeItem("accessToken");
+    localStorage.removeItem('accessToken');
     delete localHttp.defaults.headers.common.Authorization;
   }
 };

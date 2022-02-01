@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { JWTContextType } from "../@types/authenticate";
+import React, { useEffect, useState, useRef } from 'react';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { JWTContextType } from '../@types/authenticate';
 // hooks
-import useAuth from "../hooks/useAuth";
+import useAuth from '../hooks/useAuth';
 
 // ----------------------------------------------------------------------
 

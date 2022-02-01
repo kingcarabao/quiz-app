@@ -1,7 +1,7 @@
 export type AuthUser = {
   userName: string;
   userEmail: string;
-  userType: "admin" | "client";
+  userType: 'admin' | 'client';
   userInfo: {
     firstName: string;
     lastName: string;

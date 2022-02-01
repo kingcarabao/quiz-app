@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Grid,
   FormControl,
@@ -7,7 +7,7 @@ import {
   Radio,
   FormControlLabel,
   Paper,
-} from "@mui/material";
+} from '@mui/material';
 
 interface Props {
   choices: string[];
@@ -18,14 +18,13 @@ interface Props {
 
 export default function MultipleChoice(props: Props) {
   const { value, choices, setValue } = props;
-  const [radioValue, setRadioValue] = useState("");
+  const [radioValue, setRadioValue] = useState('');
 
   useEffect(() => {
     setRadioValue(value);
   }, [value]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("changed");
     setRadioValue((event.target as HTMLInputElement).value);
     setValue((event.target as HTMLInputElement).value);
   };
@@ -38,7 +37,7 @@ export default function MultipleChoice(props: Props) {
             value={choice}
             control={<Radio />}
             label={choice}
-            sx={{ p: 2, height: "100%", width: "100%" }}
+            sx={{ p: 2, height: '100%', width: '100%' }}
             tabIndex={index + 1}
           />
         </Paper>
@@ -46,8 +45,8 @@ export default function MultipleChoice(props: Props) {
     ));
 
   return (
-    <FormControl component="fieldset" sx={{ width: "100%" }}>
-      <FormLabel component="legend" sx={{ displayPrint: "none" }}>
+    <FormControl component="fieldset" sx={{ width: '100%' }}>
+      <FormLabel component="legend" sx={{ displayPrint: 'none' }}>
         Choices
       </FormLabel>
       <RadioGroup

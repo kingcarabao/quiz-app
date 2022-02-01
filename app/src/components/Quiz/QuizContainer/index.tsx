@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import QuizDetails from "../QuizDetails";
-import Question from "../Question";
-import MultipleChoice from "../MultipleChoice";
-import QuizControls from "../QuizControls";
-import ProgressBar from "../ProgressBar";
-import QuizResult from "../QuizResult";
-import LoadingScreen from "../../LoadingScreen";
+import React, { useState, useEffect } from 'react';
+import QuizDetails from '../QuizDetails';
+import Question from '../Question';
+import MultipleChoice from '../MultipleChoice';
+import QuizControls from '../QuizControls';
+import ProgressBar from '../ProgressBar';
+import QuizResult from '../QuizResult';
+import LoadingScreen from '../../LoadingScreen';
 
 interface Question {
   question: string;
@@ -31,7 +31,7 @@ interface Props {
 
 export default function QuizComponent(props: Props) {
   const { quiz } = props;
-  const title = quiz ? quiz.results[0].category : "No title";
+  const title = quiz ? quiz.results[0].category : 'No title';
   const [currentIdx, setCurrentIndex] = useState(0);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [totalAnswered, setTotalAnswered] = useState(0);
@@ -45,16 +45,14 @@ export default function QuizComponent(props: Props) {
     if (quiz) {
       setQuestions(
         quiz.results.map((result: Result) => {
-          const allChoices = result.incorrect_answers;
-          allChoices.push(result.correct_answer);
-          // randomizes the choices
-          allChoices.sort(() => Math.random() - 0.5);
+          const allChoices = [...result.incorrect_answers, result.correct_answer];
+          allChoices.sort(() => Math.random() - 0.5); // randomizes choices;
 
           return {
             question: result.question,
             choices: allChoices,
             correctAnswer: result.correct_answer,
-            userAnswer: "",
+            userAnswer: '',
           };
         })
       );
@@ -64,8 +62,7 @@ export default function QuizComponent(props: Props) {
 
   const scoreQuiz = () => {
     const result = questions.reduce(
-      (prev, curr) =>
-        curr.correctAnswer === curr.userAnswer ? prev + 1 : prev,
+      (prev, curr) => (curr.correctAnswer === curr.userAnswer ? prev + 1 : prev),
       0
     );
 
@@ -78,7 +75,7 @@ export default function QuizComponent(props: Props) {
     }
 
     setQuestions((items) => {
-      if (items[idx].userAnswer === "") {
+      if (items[idx].userAnswer === '') {
         setTotalAnswered((i) => i + 1);
       }
 
@@ -91,7 +88,7 @@ export default function QuizComponent(props: Props) {
   function ShowControls() {
     const navigateQuiz = (where: string) => {
       switch (where) {
-        case "back":
+        case 'back':
           setCurrentIndex((current) => {
             if (current <= 0) {
               return current;
@@ -99,7 +96,7 @@ export default function QuizComponent(props: Props) {
             return --current;
           });
           break;
-        case "next":
+        case 'next':
           setCurrentIndex((current) => {
             if (current >= questions.length - 1) {
               return current;
@@ -107,7 +104,7 @@ export default function QuizComponent(props: Props) {
             return ++current;
           });
           break;
-        case "end":
+        case 'end':
           scoreQuiz();
           setIsFinished(true);
           break;

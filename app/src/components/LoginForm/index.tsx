@@ -1,7 +1,7 @@
-import { useFormik } from "formik";
-import { TextField, Button, Stack, Grid, Alert } from "@mui/material";
-import { validationSchema } from "./validation";
-import useAuth from "../../hooks/useAuth";
+import { useFormik } from 'formik';
+import { TextField, Button, Stack, Grid, Alert } from '@mui/material';
+import { validationSchema } from './validation';
+import useAuth from '../../hooks/useAuth';
 
 interface FormValues {
   email: string;
@@ -10,8 +10,8 @@ interface FormValues {
 }
 
 const initialValues = {
-  email: "king@email.com",
-  password: "kingpass",
+  email: 'king@email.com',
+  password: 'kingpass',
 };
 
 export default function LoginForm() {
@@ -20,10 +20,7 @@ export default function LoginForm() {
   /**
    * Everything to do when submitting
    */
-  const onSubmitHandler = async (
-    values: FormValues,
-    { setErrors, setSubmitting }: any
-  ) => {
+  const onSubmitHandler = async (values: FormValues, { setErrors, setSubmitting }: any) => {
     if (auth) {
       const [, err] = await auth.login(values);
       if (err) {
@@ -64,7 +61,7 @@ export default function LoginForm() {
             type="email"
             error={touched.email && Boolean(errors.email)}
             helperText={touched.email && errors.email}
-            {...getFieldProps("email")}
+            {...getFieldProps('email')}
           />
         </Stack>
         <Stack sx={{ mb: 2 }}>
@@ -73,7 +70,7 @@ export default function LoginForm() {
             type="password"
             error={touched.password && Boolean(errors.password)}
             helperText={touched.password && errors.password}
-            {...getFieldProps("password")}
+            {...getFieldProps('password')}
           />
         </Stack>
         <Grid container justifyContent="flex-end">

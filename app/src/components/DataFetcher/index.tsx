@@ -1,6 +1,11 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { localHttp, quizHttp } from "../../utils/axios";
-import useSpawnChildren from "../../hooks/useChildrenSpawner";
+import React, { useState, useEffect, useCallback } from 'react';
+import { localHttp, quizHttp } from '../../utils/axios';
+import useSpawnChildren from '../../hooks/useChildrenSpawner';
+import { AxiosInstance } from 'axios';
+
+type HttpClientList = {
+  [key: string]: AxiosInstance;
+};
 
 interface Props {
   resourceUrl: string;
@@ -21,12 +26,13 @@ export default function DataFetcher({
   const spawns = useSpawnChildren(children, { [resourceName]: data });
   const getResource = useCallback(() => {
     (async () => {
-      let response;
-      if (httpClient === "quiz") {
-        response = await quizHttp.get(resourceUrl, { params: resourceParams });
-      } else {
-        response = await localHttp.get(resourceUrl, { params: resourceParams });
-      }
+      const httpClients: HttpClientList = {
+        quiz: quizHttp,
+        local: localHttp,
+      };
+      const response = await httpClients[httpClient ?? 'local'].get(resourceUrl, {
+        params: resourceParams,
+      });
       setData(response.data);
     })();
   }, [httpClient, resourceUrl, resourceParams]);

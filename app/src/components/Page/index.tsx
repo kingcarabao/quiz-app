@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
 // Hooks
-import useChildrenSpawner from "../../hooks/useChildrenSpawner";
+import useChildrenSpawner from '../../hooks/useChildrenSpawner';
 
 interface Props {
   children: React.ReactNode;
