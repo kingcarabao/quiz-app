@@ -10,6 +10,7 @@ import {
   Pagination,
 } from '@mui/material';
 import { Column } from '../../@types/table';
+import Scrollable from '../BaseUI/Scrollable';
 
 interface Props {
   headColumns: Column[];
@@ -54,12 +55,14 @@ export default function TablePrime(props: Props) {
 
   function ShowTable() {
     return (
-      <TableContainer sx={{ minWidth: 800 }}>
-        <Table size="small" aria-label="simple table">
-          <TableHead>{ShowTableHead()}</TableHead>
-          <TableBody>{ShowTableBody()}</TableBody>
-        </Table>
-      </TableContainer>
+      <Scrollable direction="both" value="auto">
+        <TableContainer>
+          <Table size="small" aria-label="simple table">
+            <TableHead>{ShowTableHead()}</TableHead>
+            <TableBody>{ShowTableBody()}</TableBody>
+          </Table>
+        </TableContainer>
+      </Scrollable>
     );
   }
 

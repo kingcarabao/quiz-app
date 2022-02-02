@@ -31,7 +31,7 @@ export default function MultipleChoice(props: Props) {
 
   const RenderChoices = () =>
     choices.map((choice: string, index) => (
-      <Grid item sm={12} md={6} key={choice}>
+      <Grid item xs={12} md={6} key={choice}>
         <Paper variant="outlined">
           <FormControlLabel
             value={choice}

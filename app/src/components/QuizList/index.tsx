@@ -4,6 +4,7 @@ import { Card, CardHeader, CardContent, Button } from '@mui/material';
 import TableSimple from '../TableSimple';
 import { quizHttp } from '../../utils/axios';
 import { Column } from '../../@types/table';
+import Scrollable from '../BaseUI/Scrollable';
 
 interface Quiz {
   id: number;
@@ -145,7 +146,9 @@ export default function QuizList() {
     <Card>
       <CardHeader title="Quiz List" />
       <CardContent>
-        <TableSimple headColumns={headColumns} columns={columns} rows={queries} rowId="qId" />
+        <Scrollable direction="both" value="auto">
+          <TableSimple headColumns={headColumns} columns={columns} rows={queries} rowId="qId" />
+        </Scrollable>
       </CardContent>
     </Card>
   );

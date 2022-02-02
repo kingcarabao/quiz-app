@@ -11,6 +11,7 @@ import {
   Pagination,
 } from '@mui/material';
 import { localHttp } from '../../utils/axios';
+import Scrollable from '../BaseUI/Scrollable';
 
 interface OrderBy {
   column: string;
@@ -142,20 +143,22 @@ export default function TablePrime(props: Props) {
   function ShowTable() {
     return (
       <>
-        <TableContainer sx={{ minWidth: 800, mt: 3 }}>
-          <Table size="small" aria-label="simple table">
-            <TableHead>{ShowTableHead()}</TableHead>
-            <TableBody>{ShowTableBody()}</TableBody>
-          </Table>
-        </TableContainer>
-        <Paper sx={{ p: 1, m: 2 }}>
-          <Pagination
-            count={totalPages.current}
-            page={pagination}
-            onChange={handlePagination}
-            color="primary"
-          />
-        </Paper>
+        <Scrollable direction="x" value="scroll">
+          <TableContainer>
+            <Table size="small" aria-label="simple table">
+              <TableHead>{ShowTableHead()}</TableHead>
+              <TableBody>{ShowTableBody()}</TableBody>
+            </Table>
+          </TableContainer>
+          <Paper sx={{ p: 1, m: 2 }}>
+            <Pagination
+              count={totalPages.current}
+              page={pagination}
+              onChange={handlePagination}
+              color="primary"
+            />
+          </Paper>
+        </Scrollable>
       </>
     );
   }

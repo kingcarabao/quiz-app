@@ -10,7 +10,7 @@ interface Props {
 
 export default function ProgressBar(props: Props) {
   const { total, current } = props;
-  const [progress, setProgress] = React.useState(10);
+  const [progress, setProgress] = React.useState(0);
 
   React.useEffect(() => {
     setProgress(Math.round((current / total) * 100));

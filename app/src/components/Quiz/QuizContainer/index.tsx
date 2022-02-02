@@ -5,16 +5,11 @@ import MultipleChoice from '../MultipleChoice';
 import QuizControls from '../QuizControls';
 import ProgressBar from '../ProgressBar';
 import QuizResult from '../QuizResult';
+import QuizResultBreakdown from '../QuizResult/ResultBreakdown';
 import LoadingScreen from '../../LoadingScreen';
+import { Question as QuestionType } from '../../../@types/quiz';
 
-interface Question {
-  question: string;
-  choices: string[];
-  correctAnswer: string;
-  userAnswer: string;
-}
-
-interface Result {
+interface RawQuestion {
   category: string;
   type: string;
   question: string;
@@ -25,7 +20,7 @@ interface Result {
 interface Props {
   quiz?: {
     response: number;
-    results: Result[];
+    results: RawQuestion[];
   };
 }
 
@@ -33,7 +28,7 @@ export default function QuizComponent(props: Props) {
   const { quiz } = props;
   const title = quiz ? quiz.results[0].category : 'No title';
   const [currentIdx, setCurrentIndex] = useState(0);
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [questions, setQuestions] = useState<QuestionType[]>([]);
   const [totalAnswered, setTotalAnswered] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
   const [score, setScore] = useState(0);
@@ -44,7 +39,7 @@ export default function QuizComponent(props: Props) {
 
     if (quiz) {
       setQuestions(
-        quiz.results.map((result: Result) => {
+        quiz.results.map((result: RawQuestion) => {
           const allChoices = [...result.incorrect_answers, result.correct_answer];
           allChoices.sort(() => Math.random() - 0.5); // randomizes choices;
 
@@ -53,20 +48,23 @@ export default function QuizComponent(props: Props) {
             choices: allChoices,
             correctAnswer: result.correct_answer,
             userAnswer: '',
+            isCorrect: false,
           };
         })
       );
+      console.log('sdasd');
+      console.log(quiz.results);
       setIsLoading(false);
     }
   }, [quiz]);
 
   const scoreQuiz = () => {
-    const result = questions.reduce(
+    const tempScore = questions.reduce(
       (prev, curr) => (curr.correctAnswer === curr.userAnswer ? prev + 1 : prev),
       0
     );
 
-    setScore(result);
+    setScore(tempScore);
   };
 
   const setAnswer = (answer: string, idx: number) => {
@@ -80,7 +78,8 @@ export default function QuizComponent(props: Props) {
       }
 
       items[idx].userAnswer = answer;
-      console.table(items);
+      items[idx].isCorrect = items[idx].correctAnswer === items[idx].userAnswer;
+      // console.table(items);
       return items;
     });
   };
@@ -151,7 +150,9 @@ export default function QuizComponent(props: Props) {
       ) : (
         <>
           {isFinished ? (
-            <QuizResult total={questions.length} score={score} />
+            <QuizResult total={questions.length} score={score}>
+              <QuizResultBreakdown questions={questions} />
+            </QuizResult>
           ) : (
             <>
               <QuizDetails title={title}>
