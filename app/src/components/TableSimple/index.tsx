@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   Paper,
   Table,
@@ -14,9 +14,9 @@ import Scrollable from '../BaseUI/Scrollable';
 
 interface Props {
   headColumns: Column[];
-  columns: Column[];
-  rows: any[];
-  rowId: string;
+  columns: Column[]; // Array of column config to be displayed for a row
+  rows: any[]; // Contains array of Objects
+  rowId?: string;
 }
 
 export default function TablePrime(props: Props) {
@@ -24,11 +24,9 @@ export default function TablePrime(props: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   function ShowTableHead() {
-    const headCols = headColumns.map((col: Column, idx: number) => (
-      <TableCell key={`head-cell-${idx}`} align={col.align}>
-        {col.data}
-      </TableCell>
-    ));
+    const headCols = headColumns.map((col: Column) =>
+      React.Children.toArray(<TableCell align={col.align}>{col.data}</TableCell>)
+    );
 
     return (
       <TableRow hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -40,15 +38,20 @@ export default function TablePrime(props: Props) {
   const ShowTableBody = () => {
     let bodyCols = null;
     if (rows) {
-      bodyCols = rows.map((row) => (
-        <TableRow hover key={`row-${row[rowId]}`}>
-          {columns.map((col: Column) => (
-            <TableCell key={`body-cell-${col.data}-${row[rowId]}-`} align={col.align}>
-              {typeof col.data === 'function' ? col.data(row) : row[col.data]}
-            </TableCell>
-          ))}
-        </TableRow>
-      ));
+      bodyCols = rows.map((row) =>
+        React.Children.toArray(
+          <TableRow hover key={rowId ? `row-${row[rowId]}` : null}>
+            {columns.map((col: Column) => (
+              <TableCell
+                key={`body-cell-${col.data}-${rowId ? `row-${row[rowId]}` : ''}-`}
+                align={col.align}
+              >
+                {typeof col.data === 'function' ? col.data(row) : String(row[String(col.data)])}
+              </TableCell>
+            ))}
+          </TableRow>
+        )
+      );
     }
     return bodyCols;
   };

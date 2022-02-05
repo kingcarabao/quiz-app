@@ -52,8 +52,6 @@ export default function QuizComponent(props: Props) {
           };
         })
       );
-      console.log('sdasd');
-      console.log(quiz.results);
       setIsLoading(false);
     }
   }, [quiz]);

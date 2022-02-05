@@ -13,7 +13,7 @@ export default function Question(props: Props) {
   const { score, total, children } = props;
   return (
     <>
-      <Card>
+      <Card sx={{ mb: 4 }}>
         <CardHeader title="Here is your result:" align="center" />
         <CardContent>
           <Typography variant="h3" align="center">
